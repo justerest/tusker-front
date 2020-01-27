@@ -1,0 +1,46 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-auto-flow: dense;
+
+  & > * {
+    padding: 8px;
+  }
+}
+
+.header {
+  background-color: #ddd;
+  text-align: center;
+}
+
+@for $column from 1 to 4 {
+  .column-#{$column} {
+    grid-column: $column;
+  }
+}
+
+.task-card {
+  cursor: pointer;
+}
+
+.Planned {
+  grid-column: 1;
+}
+
+.Snoozed {
+  grid-column: 2;
+}
+
+.InWork {
+  grid-column: 3;
+}
+
+.Completed {
+  grid-column: 4;
+}
+
+.create-task-button {
+  position: fixed;
+  top: 24px;
+  right: 16px;
+}
