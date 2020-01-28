@@ -20,6 +20,10 @@ export class TaskService {
     return this.httpClient.post(`http://localhost:3000/takeTaskInWork/${taskId}/${employeeId}`, {});
   }
 
+  snoozeTask(taskId: Task['id']): Observable<unknown> {
+    return this.httpClient.post(`http://localhost:3000/snoozeTask/${taskId}`, {});
+  }
+
   completeTask(taskId: Task['id']): Observable<unknown> {
     return this.httpClient.post(`http://localhost:3000/completeTask/${taskId}`, {});
   }

@@ -16,7 +16,7 @@
   <div class="header mat-title">Completed</div>
 
   <div *ngFor="let task of tasks" [class]="task.status">
-    <mat-card class="task-card" (click)="takeTaskInWork(task.id)">
+    <mat-card class="task-card">
       <mat-card-title>{{ task.title }}</mat-card-title>
       <mat-progress-bar
         [value]="task.progress"
@@ -28,11 +28,28 @@
       </div>
       <mat-card-actions>
         <button
-          mat-button
+          *ngIf="task.status !== 'Completed'"
+          mat-icon-button
           color="primary"
-          (click)="$event.stopPropagation(); completeTask(task.id)"
+          (click)="completeTask(task.id)"
         >
-          COMPLETE
+          <mat-icon>done_all</mat-icon>
+        </button>
+        <button
+          *ngIf="task.status !== 'InWork'"
+          mat-icon-button
+          color="primary"
+          (click)="takeTaskInWork(task.id)"
+        >
+          <mat-icon>work</mat-icon>
+        </button>
+        <button
+          *ngIf="task.status === 'InWork' || task.status === 'Completed'"
+          mat-icon-button
+          color="primary"
+          (click)="snoozeTask(task.id)"
+        >
+          <mat-icon>pause</mat-icon>
         </button>
       </mat-card-actions>
     </mat-card>

@@ -57,6 +57,10 @@ export class AppComponent implements OnInit {
     }
   }
 
+  snoozeTask(taskId: Task['id']): void {
+    this.taskService.snoozeTask(taskId).subscribe(() => this.resolveTasks());
+  }
+
   completeTask(taskId: Task['id']): void {
     this.taskService.completeTask(taskId).subscribe(() => this.resolveTasks());
   }
