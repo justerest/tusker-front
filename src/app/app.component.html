@@ -13,30 +13,29 @@
 
 <div class="grid">
   <div class="header mat-title">Planned</div>
-  <div class="header mat-title">Frozen</div>
+  <div class="header mat-title">Snoozed</div>
   <div class="header mat-title">In Work</div>
   <div class="header mat-title">Completed</div>
 
   <div *ngFor="let task of tasks" [class]="task.status">
     <mat-card class="task-card">
-      <mat-card-title>{{ task.title }}</mat-card-title>
+      <h2>{{ task.title }}</h2>
       <mat-progress-bar
         [value]="task.progress"
-        [color]="task.plannedTime > task.spentTime ? 'primary' : 'warn'"
+        [color]="
+          task.plannedTime > task.spentTime && task.neededTime <= task.plannedTime
+            ? 'primary'
+            : 'warn'
+        "
       ></mat-progress-bar>
-      <p>{{ task.spentTime | time }} / {{ task.plannedTime | time }}</p>
-      <div *ngIf="task.employeeName" class="employee-icon">
-        {{ task.employeeName | slice: 0:1 }}
-      </div>
-      <mat-card-actions>
-        <button
-          *ngIf="task.status !== 'Completed'"
-          mat-icon-button
-          color="primary"
-          (click)="completeTask(task.id)"
+      <p class="task-card__time">
+        {{ task.spentTime | time }} /
+        {{ task.plannedTime | time }}
+        <span *ngIf="task.neededTime !== task.plannedTime && task.neededTime > task.spentTime"
+          >(~ {{ task.neededTime - task.spentTime | time }})</span
         >
-          <mat-icon>done_all</mat-icon>
-        </button>
+      </p>
+      <mat-card-actions>
         <button
           *ngIf="task.status !== 'InWork'"
           mat-icon-button
@@ -46,13 +45,41 @@
           <mat-icon>work</mat-icon>
         </button>
         <button
-          *ngIf="task.status === 'InWork' || task.status === 'Completed'"
+          *ngIf="task.status === 'InWork'"
           mat-icon-button
           color="primary"
           (click)="snoozeTask(task.id)"
         >
           <mat-icon>pause</mat-icon>
         </button>
+        <button
+          *ngIf="task.status === 'Completed'"
+          mat-icon-button
+          color="primary"
+          (click)="snoozeTask(task.id)"
+        >
+          <mat-icon>replay</mat-icon>
+        </button>
+        <button
+          *ngIf="task.status !== 'Completed' && task.spentTime / task.plannedTime > 0.5"
+          mat-icon-button
+          color="warn"
+          (click)="reportTimeProgress(task)"
+        >
+          <mat-icon>access_time</mat-icon>
+        </button>
+        <button
+          *ngIf="task.status !== 'Completed'"
+          mat-icon-button
+          class="complete-button"
+          color="accent"
+          (click)="completeTask(task.id)"
+        >
+          <mat-icon>done</mat-icon>
+        </button>
+        <div *ngIf="task.employeeName" class="employee-icon task-card__employee-icon">
+          {{ task.employeeName | slice: 0:1 }}
+        </div>
       </mat-card-actions>
     </mat-card>
   </div>

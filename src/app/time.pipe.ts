@@ -5,6 +5,7 @@ export class TimePipe implements PipeTransform {
   transform(timeInMinutes: number): string {
     const hours = Math.floor(timeInMinutes / 60);
     const minutes = Math.floor(timeInMinutes % 60);
+    const seconds = Math.round((timeInMinutes - Math.floor(timeInMinutes)) * 60);
     return (
       [
         [hours, 'hr'],
@@ -12,7 +13,7 @@ export class TimePipe implements PipeTransform {
       ]
         .filter(([value]) => value)
         .flat()
-        .join(' ') || `${minutes} min`
+        .join(' ') || (seconds ? `${seconds} s` : '0')
     );
   }
 }

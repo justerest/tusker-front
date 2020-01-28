@@ -11,6 +11,7 @@
 }
 
 .header {
+  line-height: 48px;
   background-color: #ddd;
   text-align: center;
 }
@@ -54,7 +55,6 @@
   background: #fff;
   border-radius: 50%;
   cursor: pointer;
-  @include mat-elevation(1);
 
   &--active {
     color: mat-color($mat-blue, 500);
@@ -96,4 +96,33 @@
   &--Free:after {
     content: '⛱';
   }
+}
+
+.task-card {
+  .mat-progress-bar {
+    width: calc(100% + 32px);
+    margin: 16px -16px;
+  }
+
+  .mat-card-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &__employee-icon {
+    margin-left: auto;
+    background: mat-color($mat-blue, 700);
+    color: $light-primary-text;
+  }
+
+  &__time {
+    margin: 8px 0 0;
+  }
+}
+
+.complete-button {
+  position: absolute;
+  top: 12px;
+  right: 4px;
 }

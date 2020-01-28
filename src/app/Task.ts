@@ -5,6 +5,7 @@ export interface Task {
   title: string;
   status: string;
   plannedTime: number;
+  neededTime: number;
   spentTime: number;
   progress: number;
   employeeName: string;

@@ -7,6 +7,7 @@ import { Subject, interval, merge, forkJoin } from 'rxjs';
 import { exhaustMap } from 'rxjs/operators';
 import { Employee } from './Employee';
 import { EmployeeService } from './employee.service';
+import { ReportProgressDialogComponent } from './report-progress-dialog/report-progress-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +33,7 @@ export class AppComponent implements OnInit {
       this.employees = employees;
       this.currentEmployee = employees[0];
     });
-    merge(interval(30_000), this.subject)
+    merge(interval(5_000), this.subject)
       .pipe(
         exhaustMap(() =>
           forkJoin([this.taskService.getTasks(), this.employeeService.getEmployees()]),
@@ -42,10 +43,10 @@ export class AppComponent implements OnInit {
         this.tasks = tasks;
         this.employees = employees;
       });
-    this.resolveTasks();
+    this.resolveData();
   }
 
-  private resolveTasks() {
+  private resolveData() {
     this.subject.next();
   }
 
@@ -53,22 +54,29 @@ export class AppComponent implements OnInit {
     this.matDialog
       .open(CreateTaskDialogComponent, { width: '250px' })
       .afterClosed()
-      .subscribe(() => this.resolveTasks());
+      .subscribe(() => this.resolveData());
   }
 
   takeTaskInWork(taskId: Task['id']): void {
     if (this.currentEmployee) {
       this.taskService
         .takeTaskInWork(taskId, this.currentEmployee.id)
-        .subscribe(() => this.resolveTasks());
+        .subscribe(() => this.resolveData());
     }
   }
 
   snoozeTask(taskId: Task['id']): void {
-    this.taskService.snoozeTask(taskId).subscribe(() => this.resolveTasks());
+    this.taskService.snoozeTask(taskId).subscribe(() => this.resolveData());
   }
 
   completeTask(taskId: Task['id']): void {
-    this.taskService.completeTask(taskId).subscribe(() => this.resolveTasks());
+    this.taskService.completeTask(taskId).subscribe(() => this.resolveData());
+  }
+
+  reportTimeProgress(task: Task): void {
+    this.matDialog
+      .open(ReportProgressDialogComponent, { data: task, width: '250px' })
+      .afterClosed()
+      .subscribe(() => this.resolveData());
   }
 }

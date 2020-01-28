@@ -27,4 +27,8 @@ export class TaskService {
   completeTask(taskId: Task['id']): Observable<unknown> {
     return this.httpClient.post(`http://localhost:3000/completeTask/${taskId}`, {});
   }
+
+  reportTaskProgress(taskId: Task['id'], progress: number): Observable<unknown> {
+    return this.httpClient.post(`http://localhost:3000/reportTaskProgress/${taskId}`, { progress });
+  }
 }

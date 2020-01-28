@@ -15,9 +15,10 @@ import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dial
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { TimePipe } from './time.pipe';
+import { ReportProgressDialogComponent } from './report-progress-dialog/report-progress-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, CreateTaskDialogComponent, TimePipe],
+  declarations: [AppComponent, CreateTaskDialogComponent, ReportProgressDialogComponent, TimePipe],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -30,7 +31,7 @@ import { TimePipe } from './time.pipe';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
