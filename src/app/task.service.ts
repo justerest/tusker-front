@@ -12,8 +12,8 @@ export class TaskService {
     return this.httpClient.get<Task[]>('http://localhost:3000/task');
   }
 
-  createTask(title: string): Observable<unknown> {
-    return this.httpClient.post('http://localhost:3000/task', { title });
+  createTask(title: string, plannedTime: number): Observable<unknown> {
+    return this.httpClient.post('http://localhost:3000/task', { title, plannedTime });
   }
 
   takeTaskInWork(taskId: Task['id'], employeeId: Employee['id']): Observable<unknown> {

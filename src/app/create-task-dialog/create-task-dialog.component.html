@@ -1,9 +1,13 @@
-<form (submit)="create()">
+<form #form="ngForm" (submit)="form.valid ? create() : null">
   <h1 mat-dialog-title>Create Task</h1>
   <mat-dialog-content>
     <mat-form-field>
       <mat-label>Title</mat-label>
-      <input matInput [(ngModel)]="title" name="title" />
+      <input matInput [(ngModel)]="title" name="title" required />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Planned Time</mat-label>
+      <input matInput [(ngModel)]="plannedTime" name="plannedTime" type="number" required />
     </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions>

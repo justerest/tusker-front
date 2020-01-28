@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,9 +14,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
+import { TimePipe } from './time.pipe';
 
 @NgModule({
-  declarations: [AppComponent, CreateTaskDialogComponent],
+  declarations: [AppComponent, CreateTaskDialogComponent, TimePipe],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -28,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

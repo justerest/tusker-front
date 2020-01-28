@@ -9,6 +9,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class CreateTaskDialogComponent implements OnInit {
   title = '';
+  plannedTime: string | number = '';
 
   constructor(
     private dialogRef: MatDialogRef<CreateTaskDialogComponent>,
@@ -18,6 +19,8 @@ export class CreateTaskDialogComponent implements OnInit {
   ngOnInit(): void {}
 
   create(): void {
-    this.taskService.createTask(this.title).subscribe(() => this.dialogRef.close());
+    this.taskService
+      .createTask(this.title, this.plannedTime as number)
+      .subscribe(() => this.dialogRef.close());
   }
 }
