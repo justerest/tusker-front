@@ -3,9 +3,11 @@
     *ngFor="let employee of employees"
     class="employee-icon"
     [ngClass]="{ 'employee-icon--active': employee.id === currentEmployee.id }"
+    [class]="'employee-icon--' + employee.status"
     (click)="currentEmployee = employee"
   >
     {{ employee.name | slice: 0:1 }}
+    <div class="employee-icon__spent-time">{{ employee.spentTime | time }}</div>
   </div>
 </mat-toolbar>
 

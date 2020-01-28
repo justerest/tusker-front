@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from './task.service';
 import { Task } from './Task';
 import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dialog.component';
-import { Subject, interval, merge } from 'rxjs';
+import { Subject, interval, merge, forkJoin } from 'rxjs';
 import { exhaustMap } from 'rxjs/operators';
 import { Employee } from './Employee';
 import { EmployeeService } from './employee.service';
@@ -32,9 +32,16 @@ export class AppComponent implements OnInit {
       this.employees = employees;
       this.currentEmployee = employees[0];
     });
-    merge(interval(10_000), this.subject)
-      .pipe(exhaustMap(() => this.taskService.getTasks()))
-      .subscribe((tasks) => (this.tasks = tasks));
+    merge(interval(30_000), this.subject)
+      .pipe(
+        exhaustMap(() =>
+          forkJoin([this.taskService.getTasks(), this.employeeService.getEmployees()]),
+        ),
+      )
+      .subscribe(([tasks, employees]) => {
+        this.tasks = tasks;
+        this.employees = employees;
+      });
     this.resolveTasks();
   }
 
