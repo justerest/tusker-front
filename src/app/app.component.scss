@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -43,4 +45,26 @@
   position: fixed;
   top: 24px;
   right: 16px;
+}
+
+.employee-icon {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  font-weight: bold;
+  text-align: center;
+  color: $dark-primary-text;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  @include mat-elevation(1);
+
+  &--active {
+    color: mat-color($mat-pink, 500);
+    @include mat-elevation(4);
+  }
+
+  & + & {
+    margin-left: 8px;
+  }
 }

@@ -1,4 +1,13 @@
-<mat-toolbar [color]="'primary'">Task Manager</mat-toolbar>
+<mat-toolbar [color]="'primary'">
+  <div
+    *ngFor="let employee of employees"
+    class="employee-icon"
+    [ngClass]="{ 'employee-icon--active': employee.id === currentEmployee.id }"
+    (click)="currentEmployee = employee"
+  >
+    {{ employee.name | slice: 0:1 }}
+  </div>
+</mat-toolbar>
 
 <div class="grid">
   <div class="header mat-title">Planned</div>
@@ -9,7 +18,12 @@
   <div *ngFor="let task of tasks" [class]="task.status">
     <mat-card class="task-card" (click)="takeTaskInWork(task.id)">
       <mat-card-title>{{ task.title }}</mat-card-title>
-      <mat-card-content> {{ task.spentTime }} mins </mat-card-content>
+      <mat-card-content>
+        <p>{{ task.spentTime | number: '1.0-0' }} mins</p>
+        <div *ngIf="task.employeeName" class="employee-icon">
+          {{ task.employeeName | slice: 0:1 }}
+        </div>
+      </mat-card-content>
       <mat-card-actions>
         <button
           mat-button

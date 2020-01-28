@@ -1,15 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export type Identity = string | number;
-
-export interface Task {
-  id: Identity;
-  title: string;
-  status: string;
-  spentTime: number;
-}
+import { Task } from './Task';
+import { Employee } from './Employee';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
@@ -23,11 +16,11 @@ export class TaskService {
     return this.httpClient.post('http://localhost:3000/task', { title });
   }
 
-  takeTaskInWork(taskId: Task['id']): Observable<unknown> {
-    return this.httpClient.post(`http://localhost:3000/task/${taskId}/takeInWork/employeeId`, {});
+  takeTaskInWork(taskId: Task['id'], employeeId: Employee['id']): Observable<unknown> {
+    return this.httpClient.post(`http://localhost:3000/takeTaskInWork/${taskId}/${employeeId}`, {});
   }
 
   completeTask(taskId: Task['id']): Observable<unknown> {
-    return this.httpClient.post(`http://localhost:3000/task/${taskId}/complete`, {});
+    return this.httpClient.post(`http://localhost:3000/completeTask/${taskId}`, {});
   }
 }
