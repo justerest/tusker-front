@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Employee } from './Employee';
+import { Employee } from './common/Employee';
 
 @Injectable({ providedIn: 'root' })
-export class EmployeeService {
+export class EmployeeApiService {
   constructor(private httpClient: HttpClient) {}
 
   getEmployees(): Observable<Employee[]> {

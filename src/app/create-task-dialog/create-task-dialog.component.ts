@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { TaskService } from '../task.service';
+import { TaskApiService } from '../task-api.service';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -13,13 +13,13 @@ export class CreateTaskDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<CreateTaskDialogComponent>,
-    private taskService: TaskService,
+    private taskApiService: TaskApiService,
   ) {}
 
   ngOnInit(): void {}
 
   create(): void {
-    this.taskService
+    this.taskApiService
       .createTask(this.title, this.plannedTime as number)
       .subscribe(() => this.dialogRef.close());
   }

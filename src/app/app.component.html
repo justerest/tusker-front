@@ -1,10 +1,10 @@
 <mat-toolbar [color]="'primary'">
   <div
-    *ngFor="let employee of employees"
+    *ngFor="let employee of employees$ | async"
     class="employee-icon"
-    [ngClass]="{ 'employee-icon--active': employee.id === currentEmployee.id }"
+    [ngClass]="{ 'employee-icon--active': employee.id === (currentEmployee$ | async)?.id }"
     [class]="'employee-icon--' + employee.status"
-    (click)="currentEmployee = employee"
+    (click)="changeEmployee(employee)"
   >
     {{ employee.name | slice: 0:1 }}
     <div class="employee-icon__spent-time">{{ employee.spentTime | time }}</div>
@@ -17,81 +17,8 @@
   <div class="header mat-title">In Work</div>
   <div class="header mat-title">Completed</div>
 
-  <div *ngFor="let task of tasks.reverse()" [class]="task.status">
-    <mat-card class="task-card">
-      <h2>{{ task.title }}</h2>
-      <mat-progress-bar
-        class="task-card__progress task-card__goal-line"
-        [value]="
-          (task.plannedTime /
-            (task.neededTime > task.spentTime ? task.neededTime : task.spentTime)) *
-          100
-        "
-        [color]="'primary'"
-      ></mat-progress-bar>
-      <mat-progress-bar
-        class="task-card__progress"
-        [value]="(task.spentTime / task.neededTime) * 100"
-        [color]="
-          task.plannedTime > task.spentTime && task.neededTime <= task.plannedTime
-            ? 'primary'
-            : 'warn'
-        "
-      ></mat-progress-bar>
-      <p class="task-card__time">
-        {{ task.spentTime | time }} /
-        {{ task.plannedTime | time }}
-        <span *ngIf="task.neededTime !== task.plannedTime && task.neededTime > task.spentTime"
-          >(+ {{ task.neededTime - task.plannedTime | time }})</span
-        >
-      </p>
-      <mat-card-actions>
-        <button
-          *ngIf="task.status !== 'InWork'"
-          mat-icon-button
-          color="primary"
-          (click)="takeTaskInWork(task.id)"
-        >
-          <mat-icon>play_arrow</mat-icon>
-        </button>
-        <button
-          *ngIf="task.status === 'InWork'"
-          mat-icon-button
-          color="primary"
-          (click)="snoozeTask(task.id)"
-        >
-          <mat-icon>pause</mat-icon>
-        </button>
-        <button
-          *ngIf="task.status === 'Completed'"
-          mat-icon-button
-          color="primary"
-          (click)="snoozeTask(task.id)"
-        >
-          <mat-icon>replay</mat-icon>
-        </button>
-        <button
-          *ngIf="task.status !== 'Completed' && task.spentTime / task.plannedTime > 0.5"
-          mat-icon-button
-          color="warn"
-          (click)="reportTimeProgress(task)"
-        >
-          <mat-icon>access_time</mat-icon>
-        </button>
-        <button
-          *ngIf="task.status !== 'Completed'"
-          mat-icon-button
-          class="complete-button"
-          color="accent"
-          (click)="completeTask(task.id)"
-        >
-          <mat-icon>done</mat-icon>
-        </button>
-        <div *ngIf="task.employeeName" class="employee-icon task-card__employee-icon">
-          {{ task.employeeName | slice: 0:1 }}
-        </div>
-      </mat-card-actions>
-    </mat-card>
+  <div *ngFor="let task of (tasks$ | async)?.reverse(); trackBy: trackBy" [class]="task.status">
+    <app-task-card [task]="task"></app-task-card>
   </div>
 </div>
 

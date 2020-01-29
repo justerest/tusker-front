@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Task } from './Task';
-import { Employee } from './Employee';
+import { Task } from './common/Task';
+import { Employee } from './common/Employee';
 
 @Injectable({ providedIn: 'root' })
-export class TaskService {
+export class TaskApiService {
   constructor(private httpClient: HttpClient) {}
 
   getTasks(): Observable<Task[]> {

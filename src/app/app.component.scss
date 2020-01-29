@@ -45,97 +45,58 @@
   right: 16px;
 }
 
-.employee-icon {
-  position: relative;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  font-weight: bold;
-  text-align: center;
-  color: $dark-primary-text;
-  background: #fff;
-  border-radius: 50%;
-  cursor: pointer;
+::ng-deep {
+  .employee-icon {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    font-weight: bold;
+    text-align: center;
+    color: $dark-primary-text;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
 
-  &--active {
-    color: mat-color($mat-blue, 500);
-    @include mat-elevation(8);
-  }
+    &--active {
+      color: mat-color($mat-blue, 500);
+      @include mat-elevation(8);
+    }
 
-  & + & {
-    margin-left: 64px;
-  }
+    & + & {
+      margin-left: 64px;
+    }
 
-  &__spent-time {
-    position: absolute;
-    left: 24px;
-    top: -8px;
-    font-size: 12px;
-    line-height: 16px;
-    color: $light-primary-text;
-    background: mat-color($mat-pink, 500);
-    border-radius: 16px;
-    padding: 0 8px;
-    @include mat-elevation(2);
-    z-index: 10;
-  }
+    &__spent-time {
+      position: absolute;
+      left: 24px;
+      top: -8px;
+      font-size: 12px;
+      line-height: 16px;
+      color: $light-primary-text;
+      background: mat-color($mat-pink, 500);
+      border-radius: 16px;
+      padding: 0 8px;
+      @include mat-elevation(2);
+      z-index: 10;
+    }
 
-  &:after {
-    position: absolute;
-    left: 24px;
-    bottom: -12px;
-  }
+    &:after {
+      position: absolute;
+      left: 24px;
+      bottom: -12px;
+    }
 
-  &--InWork:after {
-    content: '💼';
-  }
+    &--InWork:after {
+      content: '💼';
+    }
 
-  &--Rest:after {
-    content: '😴';
-  }
+    &--Rest:after {
+      content: '😴';
+    }
 
-  &--Free:after {
-    content: '⛱';
-  }
-}
-
-.task-card {
-  @include mat-elevation(0);
-
-  &__progress {
-    width: calc(100% + 32px);
-    margin: 16px -16px;
-    opacity: 0.7;
-  }
-
-  .mat-card-actions {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  &__employee-icon {
-    margin-left: auto;
-    background: mat-color($mat-blue, 700);
-    color: $light-primary-text;
-  }
-
-  &__time {
-    margin: 8px 0 0;
-  }
-
-  &__goal-line {
-    margin-bottom: -20px;
-    opacity: 0.9;
-
-    .mat-progress-bar-buffer {
-      background: #fff;
+    &--Free:after {
+      content: '⛱';
     }
   }
-}
-
-.complete-button {
-  position: absolute;
-  top: 12px;
-  right: 4px;
 }

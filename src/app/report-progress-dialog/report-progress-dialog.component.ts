@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
-import { TaskService } from '../task.service';
+import { TaskApiService } from '../task-api.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Task } from '../Task';
+import { Task } from '../common/Task';
 
 @Component({
   templateUrl: './report-progress-dialog.component.html',
@@ -15,7 +15,7 @@ export class ReportProgressDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public task: Task,
     private dialogRef: MatDialogRef<ReportProgressDialogComponent>,
-    private taskService: TaskService,
+    private taskApiService: TaskApiService,
   ) {}
 
   ngOnInit(): void {
@@ -23,7 +23,7 @@ export class ReportProgressDialogComponent implements OnInit {
   }
 
   report(): void {
-    this.taskService
+    this.taskApiService
       .reportTaskProgress(this.task.id, this.progress as number)
       .subscribe(() => this.dialogRef.close());
   }

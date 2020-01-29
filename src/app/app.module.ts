@@ -16,9 +16,16 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { TimePipe } from './time.pipe';
 import { ReportProgressDialogComponent } from './report-progress-dialog/report-progress-dialog.component';
+import { TaskCardComponent } from './task-card/task-card.component';
 
 @NgModule({
-  declarations: [AppComponent, CreateTaskDialogComponent, ReportProgressDialogComponent, TimePipe],
+  declarations: [
+    AppComponent,
+    CreateTaskDialogComponent,
+    ReportProgressDialogComponent,
+    TimePipe,
+    TaskCardComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

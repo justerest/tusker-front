@@ -7,6 +7,5 @@ export interface Task {
   plannedTime: number;
   neededTime: number;
   spentTime: number;
-  progress: number;
   employeeName: string;
 }

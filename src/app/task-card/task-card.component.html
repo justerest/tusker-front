@@ -1,0 +1,66 @@
+<mat-card class="task-card">
+  <h2>{{ task.title }}</h2>
+  <mat-progress-bar
+    class="task-card__progress task-card__goal-line"
+    [value]="
+      (task.plannedTime / (task.neededTime > task.spentTime ? task.neededTime : task.spentTime)) *
+      100
+    "
+    [color]="'primary'"
+  ></mat-progress-bar>
+  <mat-progress-bar
+    class="task-card__progress"
+    [value]="(task.spentTime / task.neededTime) * 100"
+    [color]="
+      task.plannedTime > task.spentTime && task.neededTime <= task.plannedTime ? 'primary' : 'warn'
+    "
+  ></mat-progress-bar>
+  <p class="task-card__time">
+    <ng-container *ngIf="task.spentTime >= 1">{{ task.spentTime | time }} /</ng-container>
+    {{ task.plannedTime | time }}
+    <span *ngIf="task.neededTime !== task.plannedTime && task.neededTime > task.spentTime"
+      >(+ {{ task.neededTime - task.plannedTime | time }})</span
+    >
+  </p>
+  <mat-card-actions>
+    <button
+      *ngIf="task.status !== 'InWork'"
+      mat-icon-button
+      color="primary"
+      (click)="takeTaskInWork()"
+    >
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+    <button *ngIf="task.status === 'InWork'" mat-icon-button color="primary" (click)="snoozeTask()">
+      <mat-icon>pause</mat-icon>
+    </button>
+    <button
+      *ngIf="task.status === 'Completed'"
+      mat-icon-button
+      color="primary"
+      (click)="snoozeTask()"
+    >
+      <mat-icon>replay</mat-icon>
+    </button>
+    <button
+      *ngIf="task.status !== 'Completed' && task.spentTime / task.plannedTime > 0.5"
+      mat-icon-button
+      color="warn"
+      (click)="reportTimeProgress()"
+    >
+      <mat-icon>access_time</mat-icon>
+    </button>
+    <button
+      *ngIf="task.status !== 'Completed'"
+      mat-icon-button
+      class="complete-button"
+      color="accent"
+      (click)="completeTask()"
+    >
+      <mat-icon>done</mat-icon>
+    </button>
+    <div *ngIf="task.employeeName" class="employee-icon task-card__employee-icon">
+      {{ task.employeeName | slice: 0:1 }}
+    </div>
+  </mat-card-actions>
+</mat-card>
