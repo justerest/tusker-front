@@ -17,11 +17,21 @@
   <div class="header mat-title">In Work</div>
   <div class="header mat-title">Completed</div>
 
-  <div *ngFor="let task of tasks" [class]="task.status">
+  <div *ngFor="let task of tasks.reverse()" [class]="task.status">
     <mat-card class="task-card">
       <h2>{{ task.title }}</h2>
       <mat-progress-bar
-        [value]="task.progress"
+        class="task-card__progress task-card__goal-line"
+        [value]="
+          (task.plannedTime /
+            (task.neededTime > task.spentTime ? task.neededTime : task.spentTime)) *
+          100
+        "
+        [color]="'primary'"
+      ></mat-progress-bar>
+      <mat-progress-bar
+        class="task-card__progress"
+        [value]="(task.spentTime / task.neededTime) * 100"
         [color]="
           task.plannedTime > task.spentTime && task.neededTime <= task.plannedTime
             ? 'primary'
@@ -32,7 +42,7 @@
         {{ task.spentTime | time }} /
         {{ task.plannedTime | time }}
         <span *ngIf="task.neededTime !== task.plannedTime && task.neededTime > task.spentTime"
-          >(~ {{ task.neededTime - task.spentTime | time }})</span
+          >(+ {{ task.neededTime - task.plannedTime | time }})</span
         >
       </p>
       <mat-card-actions>
@@ -42,7 +52,7 @@
           color="primary"
           (click)="takeTaskInWork(task.id)"
         >
-          <mat-icon>work</mat-icon>
+          <mat-icon>play_arrow</mat-icon>
         </button>
         <button
           *ngIf="task.status === 'InWork'"
