@@ -8,8 +8,8 @@ import { Employee } from './common/Employee';
 
 @Injectable({ providedIn: 'root' })
 export class MainService {
-  tasks$: BehaviorSubject<Task[]> = new BehaviorSubject([]);
-  employees$: BehaviorSubject<Employee[]> = new BehaviorSubject([]);
+  tasks$: BehaviorSubject<Task[]> = new BehaviorSubject([] as Task[]);
+  employees$: BehaviorSubject<Employee[]> = new BehaviorSubject([] as Employee[]);
   currentEmployee$: BehaviorSubject<Employee> = new BehaviorSubject(null as any);
 
   constructor(
@@ -18,14 +18,19 @@ export class MainService {
   ) {}
 
   resolve(): Observable<unknown> {
-    return merge(
-      this.taskApiService.getTasks().pipe(tap((tasks: Task[]) => this.tasks$.next(tasks))),
-      this.employeeApiService.getEmployees().pipe(
-        tap((employees) => {
-          this.currentEmployee$.next(this.currentEmployee$.value || employees[0]);
-          this.employees$.next(employees);
-        }),
-      ),
+    return merge(this.resolveTasks(), this.resolveEmployees());
+  }
+
+  private resolveTasks(): Observable<Task[]> {
+    return this.taskApiService.getTasks().pipe(tap((tasks: Task[]) => this.tasks$.next(tasks)));
+  }
+
+  private resolveEmployees(): Observable<Employee[]> {
+    return this.employeeApiService.getEmployees().pipe(
+      tap((employees) => {
+        this.currentEmployee$.next(this.currentEmployee$.value || employees[0]);
+        this.employees$.next(employees);
+      }),
     );
   }
 
@@ -36,14 +41,16 @@ export class MainService {
   takeTaskInWork(taskId: Task['id']): Observable<unknown> {
     return this.taskApiService
       .takeTaskInWork(taskId, this.currentEmployee$.value.id)
-      .pipe(tap(() => this.resolve().subscribe()));
+      .pipe(tap(() => this.resolveTasks().subscribe()));
   }
 
   snoozeTask(taskId: Task['id']): Observable<unknown> {
-    return this.taskApiService.snoozeTask(taskId).pipe(tap(() => this.resolve().subscribe()));
+    return this.taskApiService.snoozeTask(taskId).pipe(tap(() => this.resolveTasks().subscribe()));
   }
 
   completeTask(taskId: Task['id']): Observable<unknown> {
-    return this.taskApiService.completeTask(taskId).pipe(tap(() => this.resolve().subscribe()));
+    return this.taskApiService
+      .completeTask(taskId)
+      .pipe(tap(() => this.resolveTasks().subscribe()));
   }
 }

@@ -44,7 +44,7 @@
       <mat-icon>replay</mat-icon>
     </button>
     <button
-      *ngIf="task.status !== 'Completed' && task.spentTime / task.plannedTime > 0.5"
+      *ngIf="task.status !== 'Completed' && task.spentTime / task.plannedTime > 0.25"
       mat-icon-button
       color="warn"
       (click)="reportTimeProgress()"

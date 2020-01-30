@@ -2,7 +2,7 @@ import { Component, OnInit, TrackByFunction } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dialog.component';
 import { interval, Observable } from 'rxjs';
-import { startWith, switchMap } from 'rxjs/operators';
+import { startWith } from 'rxjs/operators';
 import { MainService } from './main.service';
 import { Task } from './common/Task';
 import { Employee } from './common/Employee';
@@ -23,11 +23,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     interval(5_000)
-      .pipe(
-        startWith(0),
-        switchMap(() => this.mainService.resolve()),
-      )
-      .subscribe();
+      .pipe(startWith(0))
+      .subscribe(() => this.mainService.resolve().subscribe());
   }
 
   changeEmployee(employee: Employee): void {
@@ -38,6 +35,6 @@ export class AppComponent implements OnInit {
     this.matDialog
       .open(CreateTaskDialogComponent, { width: '250px' })
       .afterClosed()
-      .subscribe(() => this.mainService.resolve());
+      .subscribe(() => this.mainService.resolve().subscribe());
   }
 }
