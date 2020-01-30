@@ -46,7 +46,7 @@ import { BaseUrlInterceptor, BASE_URL } from './base-url.interceptor';
     MatProgressBarModule,
   ],
   providers: [
-    { provide: BASE_URL, useValue: 'http://localhost:3000' },
+    { provide: BASE_URL, useValue: 'http://localhost:3000/api' },
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
