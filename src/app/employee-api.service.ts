@@ -8,6 +8,6 @@ export class EmployeeApiService {
   constructor(private httpClient: HttpClient) {}
 
   getEmployees(): Observable<Employee[]> {
-    return this.httpClient.get<Employee[]>('http://localhost:3000/employee');
+    return this.httpClient.get<Employee[]>('/employee');
   }
 }

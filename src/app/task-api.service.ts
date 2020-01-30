@@ -9,26 +9,26 @@ export class TaskApiService {
   constructor(private httpClient: HttpClient) {}
 
   getTasks(): Observable<Task[]> {
-    return this.httpClient.get<Task[]>('http://localhost:3000/task');
+    return this.httpClient.get<Task[]>('/task');
   }
 
   createTask(title: string, plannedTime: number): Observable<unknown> {
-    return this.httpClient.post('http://localhost:3000/task', { title, plannedTime });
+    return this.httpClient.post('/task', { title, plannedTime });
   }
 
   takeTaskInWork(taskId: Task['id'], employeeId: Employee['id']): Observable<unknown> {
-    return this.httpClient.post(`http://localhost:3000/takeTaskInWork/${taskId}/${employeeId}`, {});
+    return this.httpClient.post(`/takeTaskInWork/${taskId}/${employeeId}`, {});
   }
 
   snoozeTask(taskId: Task['id']): Observable<unknown> {
-    return this.httpClient.post(`http://localhost:3000/snoozeTask/${taskId}`, {});
+    return this.httpClient.post(`/snoozeTask/${taskId}`, {});
   }
 
   completeTask(taskId: Task['id']): Observable<unknown> {
-    return this.httpClient.post(`http://localhost:3000/completeTask/${taskId}`, {});
+    return this.httpClient.post(`/completeTask/${taskId}`, {});
   }
 
   reportTaskProgress(taskId: Task['id'], progress: number): Observable<unknown> {
-    return this.httpClient.post(`http://localhost:3000/reportTaskProgress/${taskId}`, { progress });
+    return this.httpClient.post(`/reportTaskProgress/${taskId}`, { progress });
   }
 }

@@ -10,7 +10,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
@@ -19,6 +19,7 @@ import { ReportProgressDialogComponent } from './report-progress-dialog/report-p
 import { TaskCardComponent } from './task-card/task-card.component';
 import { TimeProgressComponent } from './time-progress/time-progress.component';
 import { TimeIndicatorsComponent } from './time-indicators/time-indicators.component';
+import { BaseUrlInterceptor, BASE_URL } from './base-url.interceptor';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,10 @@ import { TimeIndicatorsComponent } from './time-indicators/time-indicators.compo
     MatInputModule,
     MatProgressBarModule,
   ],
-  providers: [],
+  providers: [
+    { provide: BASE_URL, useValue: 'http://localhost:3000' },
+    { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
   entryComponents: [CreateTaskDialogComponent],
 })
