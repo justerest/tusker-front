@@ -5,12 +5,15 @@ import { EmployeeApiService } from './employee-api.service';
 import { tap } from 'rxjs/operators';
 import { Task } from './common/Task';
 import { Employee } from './common/Employee';
+import { assert } from './utils/assert';
 
 @Injectable({ providedIn: 'root' })
 export class MainService {
   tasks$: BehaviorSubject<Task[]> = new BehaviorSubject([] as Task[]);
   employees$: BehaviorSubject<Employee[]> = new BehaviorSubject([] as Employee[]);
-  currentEmployee$: BehaviorSubject<Employee> = new BehaviorSubject(null as any);
+  currentEmployee$: BehaviorSubject<Employee | undefined> = new BehaviorSubject(
+    undefined as Employee | undefined,
+  );
 
   constructor(
     private taskApiService: TaskApiService,
@@ -26,12 +29,9 @@ export class MainService {
   }
 
   private resolveEmployees(): Observable<Employee[]> {
-    return this.employeeApiService.getEmployees().pipe(
-      tap((employees) => {
-        this.currentEmployee$.next(this.currentEmployee$.value || employees[0]);
-        this.employees$.next(employees);
-      }),
-    );
+    return this.employeeApiService
+      .getEmployees()
+      .pipe(tap((employees) => this.employees$.next(employees)));
   }
 
   setCurrentEmployee(employee: Employee): void {
@@ -39,6 +39,7 @@ export class MainService {
   }
 
   takeTaskInWork(taskId: Task['id']): Observable<unknown> {
+    assert(this.currentEmployee$.value, 'No current employee');
     return this.taskApiService
       .takeTaskInWork(taskId, this.currentEmployee$.value.id)
       .pipe(tap(() => this.resolveTasks().subscribe()));

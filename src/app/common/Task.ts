@@ -1,4 +1,5 @@
 import { Identity } from './Identity';
+import { Employee } from './Employee';
 
 export interface Task {
   id: Identity;
@@ -7,5 +8,6 @@ export interface Task {
   plannedTime: number;
   neededTime: number;
   spentTime: number;
+  executorId: Employee['id'];
   employeeName: string;
 }

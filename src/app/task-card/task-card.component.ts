@@ -3,6 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReportProgressDialogComponent } from '../report-progress-dialog/report-progress-dialog.component';
 import { MainService } from '../main.service';
 import { Task } from '../common/Task';
+import { Observable } from 'rxjs';
+import { Employee } from '../common/Employee';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-card',
@@ -12,6 +15,20 @@ import { Task } from '../common/Task';
 })
 export class TaskCardComponent implements OnInit {
   @Input() task!: Task;
+
+  currentEmployeeId$: Observable<
+    Employee['id'] | undefined
+  > = this.mainService.currentEmployee$.pipe(map((employee) => employee?.id));
+
+  isActionsAllowed$: Observable<boolean> = this.currentEmployeeId$.pipe(
+    map(
+      (employeeId) =>
+        !!employeeId &&
+        (this.task.status === 'Planned' ||
+          this.task.status === 'Completed' ||
+          employeeId === this.task.executorId),
+    ),
+  );
 
   constructor(private mainService: MainService, private matDialog: MatDialog) {}
 
