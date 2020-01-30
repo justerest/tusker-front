@@ -29,7 +29,7 @@
   <div class="header mat-title">In Work</div>
   <div class="header mat-title">Completed</div>
 
-  <div *ngFor="let task of (tasks$ | async)?.reverse(); trackBy: trackBy" [class]="task.status">
+  <div *ngFor="let task of tasks$ | async; trackBy: trackBy" [class]="task.status">
     <app-task-card [task]="task"></app-task-card>
   </div>
 </div>

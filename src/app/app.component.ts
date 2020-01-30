@@ -2,7 +2,7 @@ import { Component, OnInit, TrackByFunction } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dialog.component';
 import { interval, Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, shareReplay } from 'rxjs/operators';
 import { MainService } from './main.service';
 import { Task } from './common/Task';
 import { Employee } from './common/Employee';
@@ -13,7 +13,10 @@ import { Employee } from './common/Employee';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  tasks$: Observable<Task[]> = this.mainService.tasks$;
+  tasks$: Observable<Task[]> = this.mainService.tasks$.pipe(
+    map((tasks) => tasks.slice().reverse()),
+    shareReplay(1),
+  );
   employees$: Observable<Employee[]> = this.mainService.employees$;
   currentEmployee$: Observable<Employee | undefined> = this.mainService.currentEmployee$;
 
