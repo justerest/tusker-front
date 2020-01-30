@@ -10,6 +10,10 @@
   }
 }
 
+.toolbar {
+  background: mat-color($mat-deep-purple, 900);
+}
+
 .header {
   line-height: 48px;
   background-color: #ddd;
@@ -41,8 +45,8 @@
 
 .create-task-button {
   position: fixed;
-  top: 24px;
-  right: 16px;
+  bottom: 16px;
+  left: 16px;
 }
 
 ::ng-deep {

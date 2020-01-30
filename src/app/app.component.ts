@@ -2,7 +2,7 @@ import { Component, OnInit, TrackByFunction } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dialog.component';
 import { interval, Observable } from 'rxjs';
-import { startWith } from 'rxjs/operators';
+import { startWith, map } from 'rxjs/operators';
 import { MainService } from './main.service';
 import { Task } from './common/Task';
 import { Employee } from './common/Employee';
@@ -17,9 +17,25 @@ export class AppComponent implements OnInit {
   employees$: Observable<Employee[]> = this.mainService.employees$;
   currentEmployee$: Observable<Employee> = this.mainService.currentEmployee$;
 
-  trackBy: TrackByFunction<Task> = (_, task) => task.id;
+  private uncompletedTasks$: Observable<Task[]> = this.tasks$.pipe(
+    map((tasks) => tasks.filter((task) => task.status !== 'Completed')),
+  );
+
+  plannedTime$: Observable<number> = this.uncompletedTasks$.pipe(
+    map((tasks) => tasks.reduce((res, { plannedTime }) => res + plannedTime, 0)),
+  );
+
+  neededTime$: Observable<number> = this.uncompletedTasks$.pipe(
+    map((tasks) => tasks.reduce((res, { neededTime }) => res + neededTime, 0)),
+  );
+
+  spentTime$: Observable<number> = this.uncompletedTasks$.pipe(
+    map((tasks) => tasks.reduce((res, { spentTime }) => res + spentTime, 0)),
+  );
 
   constructor(private mainService: MainService, private matDialog: MatDialog) {}
+
+  trackBy: TrackByFunction<Task> = (_, task) => task.id;
 
   ngOnInit(): void {
     interval(5_000)

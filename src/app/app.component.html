@@ -1,4 +1,4 @@
-<mat-toolbar [color]="'primary'">
+<mat-toolbar class="toolbar">
   <div
     *ngFor="let employee of employees$ | async"
     class="employee-icon"
@@ -10,6 +10,12 @@
     <div class="employee-icon__spent-time">{{ employee.spentTime | time }}</div>
   </div>
 </mat-toolbar>
+
+<app-time-progress
+  [plannedTime]="plannedTime$ | async"
+  [neededTime]="neededTime$ | async"
+  [spentTime]="spentTime$ | async"
+></app-time-progress>
 
 <div class="grid">
   <div class="header mat-title">Planned</div>
