@@ -1,0 +1,5 @@
+<span *ngIf="spentTime >= 1">{{ spentTime | time }} /</span>
+{{ plannedTime | time }}
+<span *ngIf="neededTime !== plannedTime && neededTime > spentTime"
+  >(+ {{ neededTime - plannedTime | time }})</span
+>

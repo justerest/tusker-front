@@ -7,11 +7,11 @@
     [spentTime]="task.spentTime"
   ></app-time-progress>
   <p class="task-card__time">
-    <ng-container *ngIf="task.spentTime >= 1">{{ task.spentTime | time }} /</ng-container>
-    {{ task.plannedTime | time }}
-    <span *ngIf="task.neededTime !== task.plannedTime && task.neededTime > task.spentTime"
-      >(+ {{ task.neededTime - task.plannedTime | time }})</span
-    >
+    <app-time-indicators
+      [plannedTime]="task.plannedTime"
+      [neededTime]="task.neededTime"
+      [spentTime]="task.spentTime"
+    ></app-time-indicators>
   </p>
   <mat-card-actions>
     <button
