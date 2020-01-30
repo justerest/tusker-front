@@ -36,6 +36,7 @@
     </button>
     <button
       *ngIf="task.status === 'Completed'"
+      class="complete-button"
       mat-icon-button
       color="primary"
       (click)="snoozeTask()"

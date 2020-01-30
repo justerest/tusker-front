@@ -11,7 +11,7 @@ import { Task } from '../common/Task';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskCardComponent implements OnInit {
-  @Input() task: Task;
+  @Input() task!: Task;
 
   constructor(private mainService: MainService, private matDialog: MatDialog) {}
 
