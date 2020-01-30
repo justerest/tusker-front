@@ -9,12 +9,6 @@
     {{ employee.name | slice: 0:1 }}
     <div class="employee-icon__spent-time">{{ employee.spentTime | time }}</div>
   </div>
-  <app-time-indicators
-    class="time-indicators"
-    [plannedTime]="plannedTime$ | async"
-    [neededTime]="neededTime$ | async"
-    [spentTime]="spentTime$ | async"
-  ></app-time-indicators>
 </mat-toolbar>
 
 <app-time-progress

@@ -6,5 +6,5 @@
 <mat-progress-bar
   class="progress"
   [value]="(spentTime / neededTime) * 100"
-  [color]="plannedTime > spentTime && neededTime <= plannedTime ? 'primary' : 'warn'"
+  [color]="plannedTime >= spentTime && neededTime <= plannedTime ? 'primary' : 'warn'"
 ></mat-progress-bar>

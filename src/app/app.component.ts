@@ -2,7 +2,7 @@ import { Component, OnInit, TrackByFunction } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dialog.component';
 import { interval, Observable } from 'rxjs';
-import { startWith, map, shareReplay } from 'rxjs/operators';
+import { startWith, map, shareReplay, switchMap } from 'rxjs/operators';
 import { MainService } from './main.service';
 import { Task } from './common/Task';
 import { Employee } from './common/Employee';
@@ -20,20 +20,27 @@ export class AppComponent implements OnInit {
   employees$: Observable<Employee[]> = this.mainService.employees$;
   currentEmployee$: Observable<Employee | undefined> = this.mainService.currentEmployee$;
 
-  private uncompletedTasks$: Observable<Task[]> = this.tasks$.pipe(
+  plannedTime$: Observable<number> = this.employees$.pipe(
+    map((employees) => employees.reduce((res, { dailyAmount }) => res + dailyAmount, 0)),
+  );
+
+  spentTime$: Observable<number> = this.employees$.pipe(
+    map((employees) => employees.reduce((res, { todaySpentTime }) => res + todaySpentTime, 0)),
+  );
+
+  neededTime$: Observable<number> = this.tasks$.pipe(
     map((tasks) => tasks.filter((task) => task.status !== 'Completed')),
-  );
-
-  plannedTime$: Observable<number> = this.uncompletedTasks$.pipe(
-    map((tasks) => tasks.reduce((res, { plannedTime }) => res + plannedTime, 0)),
-  );
-
-  neededTime$: Observable<number> = this.uncompletedTasks$.pipe(
-    map((tasks) => tasks.reduce((res, { neededTime }) => res + neededTime, 0)),
-  );
-
-  spentTime$: Observable<number> = this.uncompletedTasks$.pipe(
-    map((tasks) => tasks.reduce((res, { spentTime }) => res + spentTime, 0)),
+    map((tasks) =>
+      tasks.reduce((res, { neededTime, spentTime }) => res + Math.abs(neededTime - spentTime), 0),
+    ),
+    switchMap((neededTime) =>
+      this.spentTime$.pipe(map((employeeSpentTime) => employeeSpentTime + neededTime)),
+    ),
+    switchMap((neededTime) =>
+      this.plannedTime$.pipe(
+        map((employeePlannedTime) => Math.max(employeePlannedTime, neededTime)),
+      ),
+    ),
   );
 
   constructor(private mainService: MainService, private matDialog: MatDialog) {}

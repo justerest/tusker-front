@@ -5,4 +5,6 @@ export interface Employee {
   name: string;
   status: string;
   spentTime: number;
+  dailyAmount: number;
+  todaySpentTime: number;
 }
