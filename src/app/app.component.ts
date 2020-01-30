@@ -15,7 +15,7 @@ import { Employee } from './common/Employee';
 export class AppComponent implements OnInit {
   tasks$: Observable<Task[]> = this.mainService.tasks$;
   employees$: Observable<Employee[]> = this.mainService.employees$;
-  currentEmployee$: Observable<Employee> = this.mainService.currentEmployee$;
+  currentEmployee$: Observable<Employee | undefined> = this.mainService.currentEmployee$;
 
   private uncompletedTasks$: Observable<Task[]> = this.tasks$.pipe(
     map((tasks) => tasks.filter((task) => task.status !== 'Completed')),
