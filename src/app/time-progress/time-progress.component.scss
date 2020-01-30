@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+.progress {
+  opacity: 0.7;
+}
+
+.goal-line {
+  margin-bottom: -4px;
+  opacity: 0.9;
+
+  .mat-progress-bar-buffer {
+    background: #fff;
+  }
+}

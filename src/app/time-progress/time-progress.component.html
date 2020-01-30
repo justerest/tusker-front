@@ -1,0 +1,10 @@
+<mat-progress-bar
+  class="progress goal-line"
+  [value]="(plannedTime / (neededTime > spentTime ? neededTime : spentTime)) * 100"
+  [color]="'primary'"
+></mat-progress-bar>
+<mat-progress-bar
+  class="progress"
+  [value]="(spentTime / neededTime) * 100"
+  [color]="plannedTime > spentTime && neededTime <= plannedTime ? 'primary' : 'warn'"
+></mat-progress-bar>

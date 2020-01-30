@@ -1,20 +1,11 @@
 <mat-card class="task-card">
   <h2>{{ task.title }}</h2>
-  <mat-progress-bar
-    class="task-card__progress task-card__goal-line"
-    [value]="
-      (task.plannedTime / (task.neededTime > task.spentTime ? task.neededTime : task.spentTime)) *
-      100
-    "
-    [color]="'primary'"
-  ></mat-progress-bar>
-  <mat-progress-bar
+  <app-time-progress
     class="task-card__progress"
-    [value]="(task.spentTime / task.neededTime) * 100"
-    [color]="
-      task.plannedTime > task.spentTime && task.neededTime <= task.plannedTime ? 'primary' : 'warn'
-    "
-  ></mat-progress-bar>
+    [plannedTime]="task.plannedTime"
+    [neededTime]="task.neededTime"
+    [spentTime]="task.spentTime"
+  ></app-time-progress>
   <p class="task-card__time">
     <ng-container *ngIf="task.spentTime >= 1">{{ task.spentTime | time }} /</ng-container>
     {{ task.plannedTime | time }}

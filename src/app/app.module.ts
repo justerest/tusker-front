@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { TimePipe } from './time.pipe';
 import { ReportProgressDialogComponent } from './report-progress-dialog/report-progress-dialog.component';
 import { TaskCardComponent } from './task-card/task-card.component';
+import { TimeProgressComponent } from './time-progress/time-progress.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TaskCardComponent } from './task-card/task-card.component';
     ReportProgressDialogComponent,
     TimePipe,
     TaskCardComponent,
+    TimeProgressComponent,
   ],
   imports: [
     BrowserModule,
