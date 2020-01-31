@@ -21,6 +21,7 @@ import { TimeProgressComponent } from './time-progress/time-progress.component';
 import { TimeIndicatorsComponent } from './time-indicators/time-indicators.component';
 import { BaseUrlInterceptor, BASE_URL } from './base-url.interceptor';
 import { GlobalTimeProgressComponent } from './global-time-progress/global-time-progress.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { GlobalTimeProgressComponent } from './global-time-progress/global-time-
     MatProgressBarModule,
   ],
   providers: [
-    { provide: BASE_URL, useValue: 'http://localhost:3000/api' },
+    { provide: BASE_URL, useValue: environment.baseUrl },
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
