@@ -74,8 +74,18 @@
     }
 
     &--active {
-      color: mat-color($mat-blue, 500);
+      color: mat-color($mat-indigo, 500);
       @include mat-elevation(8);
     }
+
+    &--over-planned {
+      background: mat-color($mat-pink, 100);
+    }
   }
+}
+
+.employee-work-time-spinner {
+  position: absolute;
+  top: 1px;
+  left: 1px;
 }

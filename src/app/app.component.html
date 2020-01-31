@@ -1,11 +1,21 @@
 <mat-toolbar class="toolbar">
   <div
-    *ngFor="let employee of employees$ | async"
+    *ngFor="let employee of employees$ | async; trackBy: trackBy"
     class="employee-icon"
     [ngClass]="{ 'employee-icon--active': employee.id === (currentEmployee$ | async)?.id }"
+    [class]="
+      isEmployeeOverPlanned(employee, (tasks$ | async)!) ? 'employee-icon--over-planned' : ''
+    "
     (click)="chooseEmployee(employee)"
   >
     {{ employee.name | slice: 0:1 }}
+    <mat-progress-spinner
+      class="employee-work-time-spinner"
+      [value]="(employee.todaySpentTime / employee.dailyAmount) * 100"
+      [diameter]="38"
+      [strokeWidth]="2"
+      color="primary"
+    ></mat-progress-spinner>
   </div>
   <button mat-mini-fab color="default" (click)="createEmployee()"><mat-icon>add</mat-icon></button>
 </mat-toolbar>

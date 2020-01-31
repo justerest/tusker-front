@@ -66,4 +66,12 @@ export class AppComponent implements OnInit {
       .afterClosed()
       .subscribe(() => this.mainService.resolve().subscribe());
   }
+
+  isEmployeeOverPlanned(employee: Employee, tasks: Task[]): boolean {
+    const employeeNeededTime = tasks
+      .filter((task) => task.status !== 'Completed')
+      .filter((task) => task.executorId === employee.id)
+      .reduce((res, { neededTime, spentTime }) => res + Math.abs(neededTime - spentTime), 0);
+    return employeeNeededTime > employee.dailyAmount - employee.todaySpentTime;
+  }
 }

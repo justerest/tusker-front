@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -49,6 +50,7 @@ import { CreateEmployeeDialogComponent } from './create-employee-dialog/create-e
     MatFormFieldModule,
     MatInputModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     { provide: BASE_URL, useValue: environment.baseUrl },
