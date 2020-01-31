@@ -20,6 +20,7 @@ import { TaskCardComponent } from './task-card/task-card.component';
 import { TimeProgressComponent } from './time-progress/time-progress.component';
 import { TimeIndicatorsComponent } from './time-indicators/time-indicators.component';
 import { BaseUrlInterceptor, BASE_URL } from './base-url.interceptor';
+import { GlobalTimeProgressComponent } from './global-time-progress/global-time-progress.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { BaseUrlInterceptor, BASE_URL } from './base-url.interceptor';
     TaskCardComponent,
     TimeProgressComponent,
     TimeIndicatorsComponent,
+    GlobalTimeProgressComponent,
   ],
   imports: [
     BrowserModule,

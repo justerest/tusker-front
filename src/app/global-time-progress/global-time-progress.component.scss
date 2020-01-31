@@ -1,0 +1,20 @@
+@import '~@angular/material/theming';
+
+:host {
+  display: flex;
+  height: 8px;
+}
+
+.progress {
+  display: flex;
+  width: 100%;
+  background: mat-color($mat-indigo, 100);
+}
+
+.primary-progress {
+  background: mat-color($mat-indigo, 500);
+}
+
+.overdue-progress {
+  background: mat-color($mat-pink, 500);
+}
