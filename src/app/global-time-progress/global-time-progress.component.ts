@@ -19,6 +19,10 @@ export class GlobalTimeProgressComponent implements OnInit {
     return this.getPlannedProgress() - this.getNeededProgress() - this.getOverdueProgress();
   }
 
+  get planned(): number {
+    return ((this.neededTime - this.spentTime) / this.plannedTime) * 100 + this.primary;
+  }
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -28,7 +32,7 @@ export class GlobalTimeProgressComponent implements OnInit {
   }
 
   private getNeededProgress() {
-    return (this.spentTime / this.neededTime) * 100;
+    return (this.spentTime / Math.max(this.neededTime, this.plannedTime)) * 100;
   }
 
   private getOverdueProgress(): number {

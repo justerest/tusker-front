@@ -1,4 +1,9 @@
 <div class="progress">
+  <div
+    class="planned-time"
+    [class]="planned > 100 ? 'planned-time--overtime' : ''"
+    [style]="'width:' + planned + '%'"
+  ></div>
   <div class="primary-progress" [style]="'width:' + primary + '%'"></div>
   <div class="overdue-progress" [style]="'width:' + overdue + '%'"></div>
 </div>

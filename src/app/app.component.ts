@@ -36,11 +36,6 @@ export class AppComponent implements OnInit {
     switchMap((neededTime) =>
       this.spentTime$.pipe(map((employeeSpentTime) => employeeSpentTime + neededTime)),
     ),
-    switchMap((neededTime) =>
-      this.plannedTime$.pipe(
-        map((employeePlannedTime) => Math.max(employeePlannedTime, neededTime)),
-      ),
-    ),
   );
 
   constructor(private mainService: MainService, private matDialog: MatDialog) {}
