@@ -10,4 +10,8 @@ export class EmployeeApiService {
   getEmployees(): Observable<Employee[]> {
     return this.httpClient.get<Employee[]>('/employee');
   }
+
+  createEmployee(name: string, workStart: number, workEnd: number): Observable<unknown> {
+    return this.httpClient.post<Employee[]>('/employee', { name, workStart, workEnd });
+  }
 }

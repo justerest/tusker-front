@@ -22,6 +22,7 @@ import { TimeIndicatorsComponent } from './time-indicators/time-indicators.compo
 import { BaseUrlInterceptor, BASE_URL } from './base-url.interceptor';
 import { GlobalTimeProgressComponent } from './global-time-progress/global-time-progress.component';
 import { environment } from 'src/environments/environment';
+import { CreateEmployeeDialogComponent } from './create-employee-dialog/create-employee-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { environment } from 'src/environments/environment';
     TimeProgressComponent,
     TimeIndicatorsComponent,
     GlobalTimeProgressComponent,
+    CreateEmployeeDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +55,5 @@ import { environment } from 'src/environments/environment';
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [CreateTaskDialogComponent],
 })
 export class AppModule {}

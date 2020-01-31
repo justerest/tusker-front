@@ -59,9 +59,9 @@
 ::ng-deep {
   .employee-icon {
     position: relative;
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
     font-weight: bold;
     text-align: center;
     color: $dark-primary-text;
@@ -69,45 +69,13 @@
     border-radius: 50%;
     cursor: pointer;
 
+    &:not(:last-child) {
+      margin-right: 16px;
+    }
+
     &--active {
       color: mat-color($mat-blue, 500);
       @include mat-elevation(8);
-    }
-
-    & + & {
-      margin-left: 64px;
-    }
-
-    &__spent-time {
-      position: absolute;
-      left: 24px;
-      top: -8px;
-      font-size: 12px;
-      line-height: 16px;
-      color: $light-primary-text;
-      background: mat-color($mat-pink, 500);
-      border-radius: 16px;
-      padding: 0 8px;
-      @include mat-elevation(2);
-      z-index: 10;
-    }
-
-    &:after {
-      position: absolute;
-      left: 24px;
-      bottom: -12px;
-    }
-
-    &--InWork:after {
-      content: '💼';
-    }
-
-    &--Rest:after {
-      content: '😴';
-    }
-
-    &--Free:after {
-      content: '⛱';
     }
   }
 }

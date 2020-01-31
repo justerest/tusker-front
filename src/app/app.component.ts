@@ -6,6 +6,7 @@ import { startWith, map, shareReplay, switchMap } from 'rxjs/operators';
 import { MainService } from './main.service';
 import { Task } from './common/Task';
 import { Employee } from './common/Employee';
+import { CreateEmployeeDialogComponent } from './create-employee-dialog/create-employee-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -48,13 +49,20 @@ export class AppComponent implements OnInit {
       .subscribe(() => this.mainService.resolve().subscribe());
   }
 
-  changeEmployee(employee: Employee): void {
+  chooseEmployee(employee: Employee): void {
     this.mainService.setCurrentEmployee(employee);
   }
 
   createTask(): void {
     this.matDialog
-      .open(CreateTaskDialogComponent, { width: '250px' })
+      .open(CreateTaskDialogComponent)
+      .afterClosed()
+      .subscribe(() => this.mainService.resolve().subscribe());
+  }
+
+  createEmployee(): void {
+    this.matDialog
+      .open(CreateEmployeeDialogComponent)
       .afterClosed()
       .subscribe(() => this.mainService.resolve().subscribe());
   }

@@ -1,10 +1,12 @@
 <form #form="ngForm" (submit)="form.valid ? report() : null">
   <h1 mat-dialog-title>Report Progress for {{ task.title }}</h1>
   <mat-dialog-content>
-    <mat-form-field>
-      <mat-label>Progress</mat-label>
-      <input matInput [(ngModel)]="progress" name="progress" type="number" required />
-    </mat-form-field>
+    <div>
+      <mat-form-field>
+        <mat-label>Progress</mat-label>
+        <input matInput [(ngModel)]="progress" name="progress" type="number" required />
+      </mat-form-field>
+    </div>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-button color="primary">REPORT</button>
