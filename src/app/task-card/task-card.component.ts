@@ -48,7 +48,7 @@ export class TaskCardComponent implements OnInit {
 
   reportTimeProgress(): void {
     this.matDialog
-      .open(ReportProgressDialogComponent, { data: this.task, width: '250px' })
+      .open(ReportProgressDialogComponent, { data: this.task })
       .afterClosed()
       .subscribe();
   }

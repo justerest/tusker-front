@@ -1,36 +1,45 @@
-<mat-toolbar class="toolbar">
-  <div
-    *ngFor="let employee of employees$ | async; trackBy: trackBy"
-    class="employee-icon"
-    [ngClass]="{ 'employee-icon--active': employee.id === (currentEmployee$ | async)?.id }"
-    [class]="
-      isEmployeeOverPlanned(employee, (tasks$ | async)!) ? 'employee-icon--over-planned' : ''
-    "
-    (click)="chooseEmployee(employee)"
-  >
-    {{ employee.name | slice: 0:1 }}
-    <mat-progress-spinner
-      class="employee-work-time-spinner"
-      [value]="(employee.todaySpentTime / employee.dailyAmount) * 100"
-      [diameter]="38"
-      [strokeWidth]="2"
-      color="primary"
-    ></mat-progress-spinner>
-  </div>
-  <button mat-mini-fab color="default" (click)="createEmployee()"><mat-icon>add</mat-icon></button>
-</mat-toolbar>
+<header class="header">
+  <mat-toolbar class="toolbar">
+    <div
+      *ngFor="let employee of employees$ | async; trackBy: trackBy"
+      class="employee-icon"
+      [ngClass]="{ 'employee-icon--active': employee.id === (currentEmployee$ | async)?.id }"
+      [class]="
+        isEmployeeOverPlanned(employee, (tasks$ | async)!) ? 'employee-icon--over-planned' : ''
+      "
+      (click)="chooseEmployee(employee)"
+    >
+      {{ employee.name | slice: 0:1 }}
+      <mat-progress-spinner
+        class="employee-work-time-spinner"
+        [value]="(employee.todaySpentTime / employee.dailyAmount) * 100"
+        [diameter]="38"
+        [strokeWidth]="2"
+        color="primary"
+      ></mat-progress-spinner>
+    </div>
+    <button mat-mini-fab color="default" (click)="createEmployee()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div class="spacer"></div>
+    <div class="navigation-buttons">
+      <button mat-icon-button><mat-icon>chevron_left</mat-icon></button>
+      <button mat-icon-button><mat-icon>chevron_right</mat-icon></button>
+    </div>
+  </mat-toolbar>
 
-<app-global-time-progress
-  [plannedTime]="plannedTime$ | async"
-  [neededTime]="neededTime$ | async"
-  [spentTime]="spentTime$ | async"
-></app-global-time-progress>
+  <app-global-time-progress
+    [plannedTime]="plannedTime$ | async"
+    [neededTime]="neededTime$ | async"
+    [spentTime]="spentTime$ | async"
+  ></app-global-time-progress>
+</header>
 
 <div class="grid">
-  <div class="header mat-title">Planned</div>
-  <div class="header mat-title">Snoozed</div>
-  <div class="header mat-title">In Work</div>
-  <div class="header mat-title">Completed</div>
+  <span>Planned</span>
+  <span>Snoozed</span>
+  <span>In Work</span>
+  <span>Completed</span>
 
   <div *ngFor="let task of tasks$ | async; trackBy: trackBy" [class]="task.status">
     <app-task-card [task]="task"></app-task-card>
