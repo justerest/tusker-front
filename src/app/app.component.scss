@@ -29,6 +29,10 @@
 
 .navigation-buttons {
   color: $light-primary-text;
+
+  & > button[disabled] {
+    color: rgba(255, 255, 255, 0.26);
+  }
 }
 
 .time-indicators {
