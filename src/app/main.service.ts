@@ -18,7 +18,11 @@ export class MainService {
   );
 
   private boards!: Board[];
-  private currentBoardId: Board['id'] = 1;
+  private currentBoardId!: Board['id'];
+
+  private get projectId(): string {
+    return location.href.split('/').pop() || '';
+  }
 
   constructor(
     private boardApiService: BoardApiService,
@@ -27,11 +31,12 @@ export class MainService {
   ) {}
 
   async nextBoard(): Promise<void> {
-    if (this.currentBoardId === this.boards[this.boards.length - 1].id) {
-      await this.boardApiService.createBoard().toPromise();
+    const currentIndex = this.boards.findIndex((board) => board.id === this.currentBoardId);
+    if (currentIndex === this.boards.length - 1) {
+      await this.boardApiService.createBoard(this.projectId).toPromise();
       await this.resolveBoards().toPromise();
     }
-    this.currentBoardId = this.boards[this.boards.length - 1].id;
+    this.currentBoardId = this.boards[currentIndex + 1].id;
     await this.resolve().toPromise();
   }
 
@@ -58,7 +63,9 @@ export class MainService {
   }
 
   private resolveBoards(): Observable<unknown> {
-    return this.boardApiService.getBoards().pipe(tap((boards) => (this.boards = boards)));
+    return this.boardApiService
+      .getBoards(this.projectId)
+      .pipe(tap((boards) => (this.boards = boards)));
   }
 
   private resolveTasks(): Observable<Task[]> {
@@ -100,5 +107,11 @@ export class MainService {
     return this.taskApiService
       .completeTask(taskId)
       .pipe(tap(() => this.resolveTasks().subscribe()));
+  }
+
+  completeBoard(): Observable<unknown> {
+    return this.boardApiService
+      .incrementBoard(this.projectId)
+      .pipe(tap(() => this.resolve().subscribe()));
   }
 }

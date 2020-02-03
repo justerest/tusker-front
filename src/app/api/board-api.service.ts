@@ -7,11 +7,15 @@ import { Board } from '../common/Board';
 export class BoardApiService {
   constructor(private httpClient: HttpClient) {}
 
-  getBoards(): Observable<Board[]> {
-    return this.httpClient.get<Board[]>(`/board`);
+  getBoards(projectId: string): Observable<Board[]> {
+    return this.httpClient.get<Board[]>(`/board/${projectId}`);
   }
 
-  createBoard(): Observable<unknown> {
-    return this.httpClient.post(`/board`, {});
+  createBoard(projectId: string): Observable<unknown> {
+    return this.httpClient.post(`/board/${projectId}`, {});
+  }
+
+  incrementBoard(projectId: string): Observable<unknown> {
+    return this.httpClient.post(`/incrementBoard/${projectId}`, {});
   }
 }

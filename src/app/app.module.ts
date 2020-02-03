@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -41,6 +42,17 @@ import { CreateEmployeeDialogComponent } from './create-employee-dialog/create-e
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    RouterModule.forRoot([
+      {
+        path: ':projectId',
+        children: [],
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'main',
+      },
+    ]),
     FormsModule,
     MatToolbarModule,
     MatCardModule,

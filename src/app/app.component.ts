@@ -86,4 +86,8 @@ export class AppComponent implements OnInit {
   prevBoard(): void {
     this.mainService.prevBoard();
   }
+
+  completeBoard(): void {
+    this.mainService.completeBoard().subscribe();
+  }
 }
