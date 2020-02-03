@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { TaskApiService } from '../task-api.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MainService } from '../main.service';
 
 @Component({
   templateUrl: './create-task-dialog.component.html',
@@ -12,14 +12,14 @@ export class CreateTaskDialogComponent implements OnInit {
   plannedTime: string | number = '';
 
   constructor(
+    private mainService: MainService,
     private dialogRef: MatDialogRef<CreateTaskDialogComponent>,
-    private taskApiService: TaskApiService,
   ) {}
 
   ngOnInit(): void {}
 
   create(): void {
-    this.taskApiService
+    this.mainService
       .createTask(this.title, this.plannedTime as number)
       .subscribe(() => this.dialogRef.close());
   }

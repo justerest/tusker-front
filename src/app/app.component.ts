@@ -74,4 +74,16 @@ export class AppComponent implements OnInit {
       .reduce((res, { neededTime, spentTime }) => res + Math.abs(neededTime - spentTime), 0);
     return employeeNeededTime > employee.dailyAmount - employee.todaySpentTime;
   }
+
+  nextBoard(): void {
+    this.mainService.nextBoard();
+  }
+
+  todayBoard(): void {
+    this.mainService.todayBoard();
+  }
+
+  prevBoard(): void {
+    this.mainService.prevBoard();
+  }
 }

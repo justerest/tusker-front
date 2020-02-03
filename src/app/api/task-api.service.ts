@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Task } from './common/Task';
-import { Employee } from './common/Employee';
+import { Task } from '../common/Task';
+import { Employee } from '../common/Employee';
+import { Board } from '../common/Board';
 
 @Injectable({ providedIn: 'root' })
 export class TaskApiService {
   constructor(private httpClient: HttpClient) {}
 
-  getTasks(): Observable<Task[]> {
-    return this.httpClient.get<Task[]>('/task');
+  getTasks(boardId: Board['id']): Observable<Task[]> {
+    return this.httpClient.get<Task[]>(`/task/${boardId}`);
   }
 
-  createTask(title: string, plannedTime: number): Observable<unknown> {
-    return this.httpClient.post('/task', { title, plannedTime });
+  createTask(boardId: Board['id'], title: string, plannedTime: number): Observable<unknown> {
+    return this.httpClient.post(`/task/${boardId}`, { title, plannedTime });
   }
 
   takeTaskInWork(taskId: Task['id'], employeeId: Employee['id']): Observable<unknown> {

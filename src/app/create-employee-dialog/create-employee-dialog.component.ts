@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { EmployeeApiService } from '../employee-api.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MainService } from '../main.service';
 
 @Component({
   templateUrl: './create-employee-dialog.component.html',
@@ -13,14 +13,14 @@ export class CreateEmployeeDialogComponent implements OnInit {
   workEnd: string | number = '';
 
   constructor(
+    private mainService: MainService,
     private dialogRef: MatDialogRef<CreateEmployeeDialogComponent>,
-    private employeeApiService: EmployeeApiService,
   ) {}
 
   ngOnInit(): void {}
 
   create(): void {
-    this.employeeApiService
+    this.mainService
       .createEmployee(this.name, this.workStart as number, this.workEnd as number)
       .subscribe(() => this.dialogRef.close());
   }

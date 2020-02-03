@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
-import { TaskApiService } from '../task-api.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from '../common/Task';
+import { TaskApiService } from '../api/task-api.service';
 
 @Component({
   templateUrl: './report-progress-dialog.component.html',
