@@ -53,7 +53,7 @@ import { BoardNavigationComponent } from './board-navigation/board-navigation.co
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'main',
+        redirectTo: 'general',
       },
     ]),
     FormsModule,

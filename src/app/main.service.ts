@@ -19,7 +19,7 @@ export class MainService {
   );
 
   private get projectId(): string {
-    return location.href.split('/').pop() || '';
+    return location.href.split('/').pop() || 'general';
   }
 
   private get currentBoardId(): Identity {
