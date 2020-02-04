@@ -6,8 +6,9 @@ import { tap, switchMap } from 'rxjs/operators';
 import { Task } from './common/Task';
 import { Employee } from './common/Employee';
 import { assert } from './utils/assert';
-import { Board } from './common/Board';
 import { BoardApiService } from './api/board-api.service';
+import { BoardNavigationService } from './board-navigation/board-navigation.service';
+import { Identity } from './common/Identity';
 
 @Injectable({ providedIn: 'root' })
 export class MainService {
@@ -17,55 +18,29 @@ export class MainService {
     undefined as Employee | undefined,
   );
 
-  private boards!: Board[];
-  private currentBoardId!: Board['id'];
-
   private get projectId(): string {
     return location.href.split('/').pop() || '';
   }
 
+  private get currentBoardId(): Identity {
+    return this.boardNavigationService.currentBoardId;
+  }
+
   constructor(
+    private boardNavigationService: BoardNavigationService,
     private boardApiService: BoardApiService,
     private taskApiService: TaskApiService,
     private employeeApiService: EmployeeApiService,
   ) {}
 
-  async nextBoard(): Promise<void> {
-    const currentIndex = this.boards.findIndex((board) => board.id === this.currentBoardId);
-    if (currentIndex === this.boards.length - 1) {
-      await this.boardApiService.createBoard(this.projectId).toPromise();
-      await this.resolveBoards().toPromise();
-    }
-    this.currentBoardId = this.boards[currentIndex + 1].id;
-    await this.resolve().toPromise();
-  }
-
-  todayBoard(): void {
-    this.currentBoardId = this.boards.find((board) => !board.completed)!.id;
-    this.resolve().subscribe();
-  }
-
-  prevBoard(): void {
-    const currentIndex = this.boards.findIndex((board) => board.id === this.currentBoardId);
-    this.currentBoardId = this.boards[currentIndex - 1].id;
-    this.resolve().subscribe();
-  }
-
   resolve(): Observable<unknown> {
     return this.resolveBoards().pipe(
-      tap(() => {
-        if (!this.currentBoardId) {
-          this.currentBoardId = this.boards.find((board) => !board.completed)!.id;
-        }
-      }),
       switchMap(() => merge(this.resolveTasks(), this.resolveEmployees())),
     );
   }
 
   private resolveBoards(): Observable<unknown> {
-    return this.boardApiService
-      .getBoards(this.projectId)
-      .pipe(tap((boards) => (this.boards = boards)));
+    return this.boardNavigationService.resolve(this.projectId);
   }
 
   private resolveTasks(): Observable<Task[]> {
@@ -111,7 +86,7 @@ export class MainService {
 
   completeBoard(): Observable<unknown> {
     return this.boardApiService
-      .incrementBoard(this.projectId)
+      .completeBoardAndNext(this.projectId)
       .pipe(tap(() => this.resolve().subscribe()));
   }
 }

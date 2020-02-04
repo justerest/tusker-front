@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,6 +26,7 @@ import { BaseUrlInterceptor, BASE_URL } from './base-url.interceptor';
 import { GlobalTimeProgressComponent } from './global-time-progress/global-time-progress.component';
 import { environment } from 'src/environments/environment';
 import { CreateEmployeeDialogComponent } from './create-employee-dialog/create-employee-dialog.component';
+import { BoardNavigationComponent } from './board-navigation/board-navigation.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { CreateEmployeeDialogComponent } from './create-employee-dialog/create-e
     TimeIndicatorsComponent,
     GlobalTimeProgressComponent,
     CreateEmployeeDialogComponent,
+    BoardNavigationComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +66,7 @@ import { CreateEmployeeDialogComponent } from './create-employee-dialog/create-e
     MatInputModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatMenuModule,
   ],
   providers: [
     { provide: BASE_URL, useValue: environment.baseUrl },

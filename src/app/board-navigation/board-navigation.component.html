@@ -1,0 +1,21 @@
+<div *ngIf="isReady()" class="navigation-buttons">
+  <button *ngIf="this.isActiveBoard()" mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>settings</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="completeBoard()">
+      <mat-icon>done_all</mat-icon>
+      <span>Complete board</span>
+    </button>
+  </mat-menu>
+
+  <button mat-icon-button [disabled]="this.isPrevDisabled()" (click)="prevBoard()">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <button mat-icon-button [disabled]="this.isActiveBoard()" (click)="todayBoard()">
+    <mat-icon>today</mat-icon>
+  </button>
+  <button mat-icon-button [disabled]="this.isNextDisabled()" (click)="nextBoard()">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+</div>
