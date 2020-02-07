@@ -9,3 +9,7 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   background: mat-color($mat-grey, 200);
 }
+
+.mat-dark {
+  color: $light-primary-text;
+}

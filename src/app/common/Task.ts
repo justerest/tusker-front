@@ -10,4 +10,5 @@ export interface Task {
   spentTime: number;
   executorId: Employee['id'];
   employeeName: string;
+  tag?: string;
 }

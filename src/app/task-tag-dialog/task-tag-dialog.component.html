@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Set Tag for {{ task.title }}</h1>
+<mat-dialog-content>
+  <mat-action-list>
+    <button mat-list-item *ngFor="let tag of tags$ | async" (click)="setTag(tag.id)">
+      <mat-icon matListIcon color="primary">flag</mat-icon>
+      <h3 matLine>{{ tag.name }}</h3>
+    </button>
+  </mat-action-list>
+</mat-dialog-content>

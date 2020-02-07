@@ -1,24 +1,27 @@
 <mat-card class="task-card">
-  <h3 class="task-card__title">{{ task.title }}</h3>
+  <h3 *ngIf="task.tag" class="task-card__title">
+    {{ task.tag }}: <strong>{{ task.title }}</strong>
+  </h3>
+  <h3 *ngIf="!task.tag" class="task-card__title">{{ task.title }}</h3>
 
-  <button
-    *ngIf="task.status === 'Completed'"
-    class="complete-button"
-    mat-icon-button
-    color="primary"
-    (click)="snoozeTask()"
-  >
-    <mat-icon>replay</mat-icon>
+  <button class="complete-button" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
   </button>
-  <button
-    *ngIf="task.status !== 'Completed'"
-    mat-icon-button
-    class="complete-button"
-    color="accent"
-    (click)="completeTask()"
-  >
-    <mat-icon>done</mat-icon>
-  </button>
+
+  <mat-menu #menu="matMenu">
+    <button *ngIf="task.status !== 'Completed'" mat-menu-item (click)="completeTask()">
+      <mat-icon color="accent">done</mat-icon>
+      <span>Complete</span>
+    </button>
+    <button *ngIf="task.status === 'Completed'" mat-menu-item (click)="snoozeTask()">
+      <mat-icon color="primary">replay</mat-icon>
+      <span>Return</span>
+    </button>
+    <button mat-menu-item (click)="setTag()">
+      <mat-icon color="primary">flag</mat-icon>
+      <span>Set tag</span>
+    </button>
+  </mat-menu>
 
   <app-time-progress
     class="task-card__progress"

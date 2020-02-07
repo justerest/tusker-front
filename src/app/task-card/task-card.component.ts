@@ -6,6 +6,7 @@ import { Task } from '../common/Task';
 import { Observable } from 'rxjs';
 import { Employee } from '../common/Employee';
 import { map } from 'rxjs/operators';
+import { TaskTagDialogComponent } from '../task-tag-dialog/task-tag-dialog.component';
 
 @Component({
   selector: 'app-task-card',
@@ -47,9 +48,10 @@ export class TaskCardComponent implements OnInit {
   }
 
   reportTimeProgress(): void {
-    this.matDialog
-      .open(ReportProgressDialogComponent, { data: this.task })
-      .afterClosed()
-      .subscribe();
+    this.matDialog.open(ReportProgressDialogComponent, { data: this.task });
+  }
+
+  setTag(): void {
+    this.matDialog.open(TaskTagDialogComponent, { data: this.task });
   }
 }
