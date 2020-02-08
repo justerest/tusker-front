@@ -1,17 +1,5 @@
 @import '~@angular/material/theming';
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-auto-flow: dense;
-  padding-bottom: 40px;
-
-  & > * {
-    padding: 8px;
-    align-items: stretch;
-  }
-}
-
 .toolbar {
   background: mat-color($mat-indigo, 900);
 }
@@ -37,28 +25,6 @@
   .column-#{$column} {
     grid-column: $column;
   }
-}
-
-.Planned {
-  grid-column: 1;
-}
-
-.Snoozed {
-  grid-column: 2;
-}
-
-.InWork {
-  grid-column: 3;
-}
-
-.Completed {
-  grid-column: 4;
-}
-
-.create-task-button {
-  position: fixed;
-  bottom: 16px;
-  left: 16px;
 }
 
 ::ng-deep {

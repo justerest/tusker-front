@@ -29,6 +29,7 @@ import { environment } from 'src/environments/environment';
 import { CreateEmployeeDialogComponent } from './create-employee-dialog/create-employee-dialog.component';
 import { BoardNavigationComponent } from './board-navigation/board-navigation.component';
 import { TaskTagDialogComponent } from './task-tag-dialog/task-tag-dialog.component';
+import { BoardComponent } from './board/board.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { TaskTagDialogComponent } from './task-tag-dialog/task-tag-dialog.compon
     CreateEmployeeDialogComponent,
     BoardNavigationComponent,
     TaskTagDialogComponent,
+    BoardComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +53,7 @@ import { TaskTagDialogComponent } from './task-tag-dialog/task-tag-dialog.compon
     RouterModule.forRoot([
       {
         path: ':projectId',
-        children: [],
+        component: BoardComponent,
       },
       {
         path: '',

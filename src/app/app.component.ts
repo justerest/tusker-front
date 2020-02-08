@@ -14,11 +14,10 @@ import { CreateEmployeeDialogComponent } from './create-employee-dialog/create-e
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  tasks$: Observable<Task[]> = this.mainService.tasks$.pipe(
-    map((tasks) => tasks.slice().reverse()),
-    shareReplay(1),
-  );
+  tasks$: Observable<Task[]> = this.mainService.tasks$;
+
   employees$: Observable<Employee[]> = this.mainService.employees$;
+
   currentEmployee$: Observable<Employee | undefined> = this.mainService.currentEmployee$;
 
   plannedTime$: Observable<number> = this.employees$.pipe(
@@ -51,13 +50,6 @@ export class AppComponent implements OnInit {
 
   chooseEmployee(employee: Employee): void {
     this.mainService.setCurrentEmployee(employee);
-  }
-
-  createTask(): void {
-    this.matDialog
-      .open(CreateTaskDialogComponent)
-      .afterClosed()
-      .subscribe(() => this.mainService.resolve().subscribe());
   }
 
   createEmployee(): void {

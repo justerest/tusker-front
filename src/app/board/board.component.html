@@ -1,0 +1,12 @@
+<div class="grid">
+  <span>Planned</span>
+  <span>Snoozed</span>
+  <span>In Work</span>
+  <span>Completed</span>
+
+  <div *ngFor="let task of tasks$ | async; trackBy: trackBy" [class]="task.status">
+    <app-task-card [task]="task"></app-task-card>
+  </div>
+</div>
+
+<button class="create-task-button" mat-fab (click)="createTask()"><mat-icon>add</mat-icon></button>
