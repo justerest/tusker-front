@@ -1,0 +1,12 @@
+<table class="mat-table mat-elevation-z8">
+  <tr class="mat-header-row">
+    <th class="mat-header-cell">Tag \ Date</th>
+    <th class="mat-header-cell" *ngFor="let date of dates">{{ date | date: 'mediumDate' }}</th>
+    <th class="mat-header-cell">Total</th>
+  </tr>
+  <tr class="mat-row" *ngFor="let tag of tags">
+    <th class="mat-header-cell">{{ tag || 'Common' }}</th>
+    <td class="mat-cell" *ngFor="let date of dates">{{ reportGroups[tag][date] || '-' }}</td>
+    <td class="mat-cell">{{ getTagTotal(tag) | number }}</td>
+  </tr>
+</table>

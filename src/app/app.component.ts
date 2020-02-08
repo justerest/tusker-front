@@ -1,8 +1,7 @@
 import { Component, OnInit, TrackByFunction } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dialog.component';
-import { interval, Observable } from 'rxjs';
-import { startWith, map, shareReplay, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { MainService } from './main.service';
 import { Task } from './common/Task';
 import { Employee } from './common/Employee';
@@ -42,11 +41,7 @@ export class AppComponent implements OnInit {
 
   trackBy: TrackByFunction<Task> = (_, task) => task.id;
 
-  ngOnInit(): void {
-    interval(5_000)
-      .pipe(startWith(0))
-      .subscribe(() => this.mainService.resolve().subscribe());
-  }
+  ngOnInit(): void {}
 
   chooseEmployee(employee: Employee): void {
     this.mainService.setCurrentEmployee(employee);

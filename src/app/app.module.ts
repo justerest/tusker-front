@@ -11,6 +11,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,6 +31,7 @@ import { CreateEmployeeDialogComponent } from './create-employee-dialog/create-e
 import { BoardNavigationComponent } from './board-navigation/board-navigation.component';
 import { TaskTagDialogComponent } from './task-tag-dialog/task-tag-dialog.component';
 import { BoardComponent } from './board/board.component';
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
   declarations: [
@@ -45,12 +47,17 @@ import { BoardComponent } from './board/board.component';
     BoardNavigationComponent,
     TaskTagDialogComponent,
     BoardComponent,
+    ReportsComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot([
+      {
+        path: 'reports',
+        component: ReportsComponent,
+      },
       {
         path: ':projectId',
         component: BoardComponent,
@@ -73,6 +80,7 @@ import { BoardComponent } from './board/board.component';
     MatProgressSpinnerModule,
     MatMenuModule,
     MatListModule,
+    MatTableModule,
   ],
   providers: [
     { provide: BASE_URL, useValue: environment.baseUrl },

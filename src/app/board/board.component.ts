@@ -1,10 +1,11 @@
 import { Component, OnInit, TrackByFunction } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, interval } from 'rxjs';
 import { Task } from '../common/Task';
-import { map, shareReplay } from 'rxjs/operators';
+import { map, shareReplay, startWith } from 'rxjs/operators';
 import { CreateTaskDialogComponent } from '../create-task-dialog/create-task-dialog.component';
 import { MainService } from '../main.service';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './board.component.html',
@@ -18,9 +19,18 @@ export class BoardComponent implements OnInit {
 
   trackBy: TrackByFunction<Task> = (_, task) => task.id;
 
-  constructor(private mainService: MainService, private matDialog: MatDialog) {}
+  constructor(
+    private mainService: MainService,
+    private matDialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const { projectId = 'general' } = this.activatedRoute.snapshot.params;
+    interval(5_000)
+      .pipe(startWith(0))
+      .subscribe(() => this.mainService.resolve(projectId).subscribe());
+  }
 
   createTask(): void {
     this.matDialog

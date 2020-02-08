@@ -18,9 +18,7 @@ export class MainService {
     undefined as Employee | undefined,
   );
 
-  private get projectId(): string {
-    return location.href.split('/').pop() || 'general';
-  }
+  private projectId = 'general';
 
   private get currentBoardId(): Identity {
     return this.boardNavigationService.currentBoardId;
@@ -33,7 +31,10 @@ export class MainService {
     private employeeApiService: EmployeeApiService,
   ) {}
 
-  resolve(): Observable<unknown> {
+  resolve(projectId?: string): Observable<unknown> {
+    if (projectId) {
+      this.projectId = projectId;
+    }
     return this.resolveBoards().pipe(
       switchMap(() => merge(this.resolveTasks(), this.resolveEmployees())),
     );

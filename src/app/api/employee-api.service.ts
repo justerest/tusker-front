@@ -4,6 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { Employee } from '../common/Employee';
 import { Board } from '../common/Board';
 
+export interface TimeReport {
+  tag?: string;
+  date: Date;
+  spentTime: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class EmployeeApiService {
   constructor(private httpClient: HttpClient) {}
@@ -19,5 +25,9 @@ export class EmployeeApiService {
     workEnd: number,
   ): Observable<unknown> {
     return this.httpClient.post<Employee[]>(`/employee/${boardId}`, { name, workStart, workEnd });
+  }
+
+  getReports(employeeId: Employee['id']): Observable<TimeReport[]> {
+    return this.httpClient.get<TimeReport[]>(`/report/${employeeId}`);
   }
 }
